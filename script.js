@@ -98,12 +98,12 @@ window.addEventListener('scroll', () => {
 const SUPABASE_URL = 'https://xerilhfrgzesorantrzp.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_QfhTJnfpOPFWYOzj1QxvsQ_aZS2hIEa';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── Session locale (synchronisée via onAuthStateChange) ───────
 let currentSession = null;
 
-supabase.auth.onAuthStateChange((_event, session) => {
+_sb.auth.onAuthStateChange((_event, session) => {
   currentSession = session;
   updateNavUI();
 });
@@ -127,7 +127,7 @@ function translateError(msg) {
 async function authRegister(name, email, password) {
   if (password.length < 6)
     throw new Error('Le mot de passe doit comporter au moins 6 caractères.');
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await _sb.auth.signUp({
     email: email.trim(),
     password,
     options: { data: { full_name: name.trim() } },
@@ -138,7 +138,7 @@ async function authRegister(name, email, password) {
 }
 
 async function authLogin(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await _sb.auth.signInWithPassword({
     email: email.trim(),
     password,
   });
@@ -148,13 +148,13 @@ async function authLogin(email, password) {
 }
 
 async function authLogout() {
-  await supabase.auth.signOut();
+  await _sb.auth.signOut();
   updateNavUI();
   showToast('Vous êtes déconnecté.', 'success');
 }
 
 async function authUpdateInfo(_userId, newName, newEmail) {
-  const { data, error } = await supabase.auth.updateUser({
+  const { data, error } = await _sb.auth.updateUser({
     email: newEmail.trim(),
     data: { full_name: newName.trim() },
   });
@@ -167,20 +167,20 @@ async function authUpdatePassword(_userId, currentPw, newPw) {
   if (newPw.length < 6)
     throw new Error('Le nouveau mot de passe doit comporter au moins 6 caractères.');
   // Vérifie l'ancien mot de passe en re-signant
-  const { error: verifyErr } = await supabase.auth.signInWithPassword({
+  const { error: verifyErr } = await _sb.auth.signInWithPassword({
     email: currentSession?.user?.email,
     password: currentPw,
   });
   if (verifyErr) throw new Error('Mot de passe actuel incorrect.');
-  const { error } = await supabase.auth.updateUser({ password: newPw });
+  const { error } = await _sb.auth.updateUser({ password: newPw });
   if (error) throw new Error(translateError(error.message));
 }
 
 async function authDeleteAccount() {
   // Nécessite la fonction SQL delete_user() dans Supabase (voir instructions)
-  const { error } = await supabase.rpc('delete_user');
+  const { error } = await _sb.rpc('delete_user');
   if (error) throw new Error('Impossible de supprimer le compte : ' + error.message);
-  await supabase.auth.signOut();
+  await _sb.auth.signOut();
 }
 
 // ── UI helpers ────────────────────────────────────────────────
@@ -415,7 +415,7 @@ document.getElementById('btn-delete-account')?.addEventListener('click', async (
 });
 
 // ── Init — restaure la session au chargement ──────────────────
-supabase.auth.getSession().then(({ data }) => {
+_sb.auth.getSession().then(({ data }) => {
   currentSession = data.session;
   updateNavUI();
 });
