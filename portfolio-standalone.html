@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DB — E-commerce &amp; Digital Strategy</title>
+<style>
+/* ── RESET ────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#4ECDC4;--accent-dark:#3ab5ac;
+  --bg:#0f0f0f;--bg-card:#181818;
+  --text:#f0f0f0;--text-muted:#888;
+  --border:rgba(78,205,196,.25);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  --radius:12px;--tr:.3s ease;--nav-h:72px
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%;display:block}
+
+/* ── ICON HELPERS ─────────────────────────────────────── */
+.ico{display:inline-block;vertical-align:middle;flex-shrink:0}
+
+/* ── TYPOGRAPHY ───────────────────────────────────────── */
+.section-tag{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:1rem}
+.section-subtitle{color:var(--text-muted);font-size:1rem;max-width:520px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:3rem}
+
+/* ── LAYOUT ───────────────────────────────────────────── */
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+.section{padding:6rem 0}
+
+/* ── BUTTONS ──────────────────────────────────────────── */
+.btn-primary{display:inline-block;padding:.75rem 2rem;background:var(--accent);color:#0f0f0f;font-weight:600;font-size:.9rem;border-radius:50px;border:2px solid var(--accent);transition:background var(--tr),transform var(--tr);cursor:pointer;font-family:var(--font)}
+.btn-primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);transform:translateY(-2px)}
+.btn-outline{display:inline-block;padding:.75rem 2rem;background:transparent;color:var(--text);font-weight:500;font-size:.9rem;border-radius:50px;border:2px solid rgba(255,255,255,.25);transition:border-color var(--tr),transform var(--tr)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn-outline-small{display:inline-block;margin-top:1.2rem;font-size:.85rem;font-weight:500;color:var(--accent);border-bottom:1px solid transparent;transition:border-color var(--tr)}
+.btn-outline-small:hover{border-color:var(--accent)}
+
+/* ── NAVBAR ───────────────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;background:rgba(15,15,15,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05);z-index:1000}
+.logo-text{font-size:1.6rem;font-weight:800;color:var(--accent);font-style:italic;letter-spacing:-1px}
+.nav-links{display:flex;align-items:center;gap:2.5rem}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--text-muted);transition:color var(--tr);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width var(--tr)}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-contact-btn{padding:.5rem 1.4rem!important;border:1.5px solid var(--accent)!important;border-radius:50px;color:var(--accent)!important;transition:background var(--tr),color var(--tr)!important}
+.nav-contact-btn:hover{background:var(--accent)!important;color:#0f0f0f!important}
+.nav-contact-btn::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:transform var(--tr),opacity var(--tr)}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{min-height:100vh;padding-top:var(--nav-h);display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0f0f0f 0%,#151515 60%,#0a1a19 100%)}
+.hero::before{content:'';position:absolute;top:30%;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(78,205,196,.07) 0%,transparent 70%);pointer-events:none}
+.social-bar{position:absolute;left:2rem;bottom:2.5rem;display:flex;gap:1rem;z-index:10}
+.social-bar a{color:var(--text-muted);transition:color var(--tr),transform var(--tr);display:flex;align-items:center}
+.social-bar a:hover{color:var(--accent);transform:translateY(-3px)}
+.hero-image-wrapper{flex:0 0 48%;max-width:48%;height:100vh;position:relative;overflow:hidden}
+.hero-image-wrapper img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.hero-image-wrapper::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,#0f0f0f 95%),linear-gradient(to top,#0f0f0f 0%,transparent 30%)}
+.hero-image-placeholder{width:100%;height:100%;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:var(--text-muted);border-right:1px dashed var(--border)}
+.hero-image-placeholder .ico{color:var(--border)}
+.hero-image-placeholder span{font-size:.9rem;text-align:center;padding:0 2rem}
+.hero-content{flex:1;padding:0 4rem 0 3rem;position:relative;z-index:2}
+.hero-tag{font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.hero-title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:1.2rem}
+.hero-subtitle{font-size:1rem;color:var(--accent);font-weight:400;margin-bottom:2.5rem;font-style:italic}
+.hero-cta-group{display:flex;gap:1rem;flex-wrap:wrap}
+.direct-msg{position:absolute;bottom:2.5rem;right:3rem;display:flex;flex-direction:column;align-items:flex-end;gap:0;z-index:10}
+.direct-msg-label{font-size:.72rem;color:var(--text-muted);font-style:italic;margin-bottom:-4px}
+.arrow-svg{width:70px;height:35px;margin-bottom:-4px}
+.direct-msg-icon{width:52px;height:52px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0f0f0f;transition:transform var(--tr),background var(--tr);box-shadow:0 4px 20px rgba(78,205,196,.35)}
+.direct-msg-icon:hover{transform:scale(1.1);background:var(--accent-dark)}
+
+/* ── ABOUT ────────────────────────────────────────────── */
+.about{background:var(--bg)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-text p{color:#ccc;margin-bottom:1rem;font-size:.95rem}
+.about-stats{display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.07)}
+.stat-number{display:block;font-size:1.8rem;font-weight:800;color:var(--accent);line-height:1}
+.stat-plus{font-size:1.2rem}
+.stat-label{display:block;font-size:.75rem;color:var(--text-muted);margin-top:.3rem;font-weight:500}
+.about-image{border-radius:var(--radius);overflow:hidden;aspect-ratio:3/4;background:var(--bg-card);position:relative}
+.about-image-placeholder{width:100%;height:100%;min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:var(--text-muted);border:1px dashed var(--border);border-radius:var(--radius)}
+.about-image-placeholder .ico{color:var(--border)}
+.about-image-placeholder span{font-size:.85rem}
+
+/* ── SERVICES ─────────────────────────────────────────── */
+.services{background:#111}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+.service-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:2rem 1.6rem;transition:border-color var(--tr),transform var(--tr),box-shadow var(--tr)}
+.service-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 32px rgba(78,205,196,.12)}
+.service-icon{width:48px;height:48px;background:rgba(78,205,196,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:1.2rem}
+.service-card h3{font-size:1rem;font-weight:700;margin-bottom:1rem}
+.service-card ul li{font-size:.82rem;color:var(--text-muted);padding:.3rem 0 .3rem 1rem;position:relative}
+.service-card ul li::before{content:'—';position:absolute;left:0;color:var(--accent);font-size:.7rem}
+
+/* ── WORK ─────────────────────────────────────────────── */
+.work{background:var(--bg)}
+.work-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1.5rem;align-items:start}
+.work-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:2rem;transition:border-color var(--tr)}
+.work-card:hover{border-color:var(--border)}
+.work-card.featured{border-color:rgba(78,205,196,.3);background:linear-gradient(135deg,#181818,#1a2420)}
+.work-card-tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:rgba(78,205,196,.1);padding:.25rem .8rem;border-radius:50px;margin-bottom:1rem}
+.work-card h3{font-size:1.05rem;font-weight:700;margin-bottom:.8rem}
+.work-card p{font-size:.87rem;color:#bbb;margin-bottom:.8rem}
+.work-highlights li{font-size:.82rem;color:var(--text-muted);padding:.3rem 0;display:flex;align-items:flex-start;gap:.6rem}
+.work-highlights li .ico{color:var(--accent);margin-top:3px}
+.work-school{margin-top:1.2rem;font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:.5rem}
+.work-school .ico{color:var(--accent)}
+.add-card{border-style:dashed;border-color:rgba(255,255,255,.1);cursor:pointer;min-height:180px;display:flex;align-items:center;justify-content:center}
+.add-card:hover{border-color:var(--accent)}
+.add-card-inner{display:flex;flex-direction:column;align-items:center;gap:.8rem;color:var(--text-muted);font-size:.85rem;text-align:center}
+.add-card-inner .ico{color:rgba(255,255,255,.15)}
+
+/* ── APPROACH ─────────────────────────────────────────── */
+.approach{background:linear-gradient(135deg,#0a1a19 0%,#111 100%);border-top:1px solid rgba(78,205,196,.1);border-bottom:1px solid rgba(78,205,196,.1)}
+.approach-inner{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:center}
+.approach-text p{color:#bbb;font-size:.95rem;margin-top:1rem}
+.approach-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pillar{background:rgba(255,255,255,.03);border:1px solid rgba(78,205,196,.12);border-radius:var(--radius);padding:1.6rem 1.2rem;text-align:center;transition:border-color var(--tr),transform var(--tr)}
+.pillar:hover{border-color:var(--accent);transform:translateY(-4px)}
+.pillar .ico{color:var(--accent);margin-bottom:.8rem;display:block;margin-left:auto;margin-right:auto}
+.pillar h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+.pillar p{font-size:.8rem;color:var(--text-muted)}
+
+/* ── CONTACT ──────────────────────────────────────────── */
+.contact{background:#111}
+.contact-grid{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start}
+.contact-item{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;font-size:.9rem;color:#bbb}
+.contact-item .ico{color:var(--accent);flex-shrink:0}
+.contact-socials{display:flex;gap:1rem;margin-top:2rem}
+.contact-socials a{width:40px;height:40px;border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:border-color var(--tr),color var(--tr),transform var(--tr)}
+.contact-socials a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.contact-form input,.contact-form textarea{background:var(--bg-card);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.85rem 1.1rem;color:var(--text);font-family:var(--font);font-size:.9rem;transition:border-color var(--tr);width:100%;resize:vertical}
+.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent)}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--text-muted)}
+.contact-form .btn-primary{align-self:flex-start;border:none}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.footer{background:#0a0a0a;border-top:1px solid rgba(255,255,255,.05);padding:2rem 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-size:1.4rem}
+.footer-copy{font-size:.8rem;color:var(--text-muted)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.8rem;color:var(--text-muted);transition:color var(--tr)}
+.footer-links a:hover{color:var(--accent)}
+
+/* ── SCROLL REVEAL ────────────────────────────────────── */
+[data-reveal]{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+[data-reveal].revealed{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media(max-width:1024px){
+  .work-grid{grid-template-columns:1fr 1fr}
+  .add-card{display:none}
+  .approach-inner{grid-template-columns:1fr;gap:2.5rem}
+}
+@media(max-width:768px){
+  :root{--nav-h:64px}
+  .navbar{padding:0 1.5rem}
+  .nav-links{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(15,15,15,.97);flex-direction:column;gap:0;padding:1rem 0 2rem;border-bottom:1px solid rgba(255,255,255,.05)}
+  .nav-links.open{display:flex}
+  .nav-links li{width:100%;text-align:center}
+  .nav-links a{display:block;padding:.8rem 0}
+  .hamburger{display:flex}
+  .hero{flex-direction:column;min-height:100vh;padding-top:var(--nav-h)}
+  .hero-image-wrapper{flex:none;max-width:100%;width:100%;height:55vw;min-height:280px}
+  .hero-image-wrapper::after{background:linear-gradient(to bottom,transparent 40%,#0f0f0f 95%)}
+  .hero-content{padding:2rem 1.5rem 5rem}
+  .hero-title{font-size:clamp(1.6rem,6vw,2.2rem)}
+  .social-bar{bottom:auto;top:calc(var(--nav-h) + .8rem);left:1rem}
+  .direct-msg{right:1.5rem;bottom:1.5rem}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .about-image{aspect-ratio:16/9}
+  .services-grid{grid-template-columns:1fr}
+  .work-grid{grid-template-columns:1fr}
+  .approach-pillars{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:2.5rem}
+  .form-row{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;text-align:center}
+}
+@media(max-width:480px){
+  .section{padding:4rem 0}
+  .about-stats{flex-direction:column;gap:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG ICON DEFS (hidden, reused via <use>) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ico-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="ico-twitter" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.735-8.849L1.254 2.25H8.08l4.259 5.629 5.9-5.629Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"/></symbol>
+  <symbol id="ico-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></symbol>
+  <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="ico-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="ico-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="ico-chat" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></symbol>
+  <symbol id="ico-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+  <symbol id="ico-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ico-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="ico-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="ico-grad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="ico-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></symbol>
+  <symbol id="ico-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="ico-sync" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+  <symbol id="ico-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></symbol>
+  <symbol id="ico-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+  <symbol id="ico-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+</svg>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="navbar">
+  <div class="nav-logo"><span class="logo-text">DB</span></div>
+  <ul class="nav-links">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#about">About me</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact" class="nav-contact-btn">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="social-bar">
+    <a href="#" aria-label="Facebook"><svg class="ico" width="16" height="16"><use href="#ico-facebook"/></svg></a>
+    <a href="#" aria-label="Twitter"><svg class="ico" width="16" height="16"><use href="#ico-twitter"/></svg></a>
+    <a href="#" aria-label="Instagram"><svg class="ico" width="16" height="16"><use href="#ico-instagram"/></svg></a>
+    <a href="#" aria-label="LinkedIn"><svg class="ico" width="16" height="16"><use href="#ico-linkedin"/></svg></a>
+  </div>
+
+  <div class="hero-image-wrapper">
+    <!-- TODO: Remplacer par votre photo — <img src="photo.jpg" alt="Votre nom"> -->
+    <div class="hero-image-placeholder">
+      <svg class="ico" width="64" height="64"><use href="#ico-user"/></svg>
+      <span>Votre photo professionnelle</span>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-tag">E-commerce &amp; Digital Strategy</p>
+    <h1 class="hero-title">Stratégie e-commerce &amp;<br/>Marketing digital</h1>
+    <p class="hero-subtitle">— Vous avez un projet en tête ? Discutons-en dès aujourd'hui.</p>
+    <div class="hero-cta-group">
+      <a href="#contact" class="btn-primary">Me contacter</a>
+      <a href="#work" class="btn-outline">Voir mes projets</a>
+    </div>
+  </div>
+
+  <div class="direct-msg">
+    <span class="direct-msg-label">Envoyer un message direct</span>
+    <svg class="arrow-svg" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 35 Q 40 5 70 20" stroke="#4ECDC4" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+      <polygon points="65,15 75,22 62,26" fill="#4ECDC4"/>
+    </svg>
+    <a href="#contact" class="direct-msg-icon" aria-label="Message direct">
+      <svg class="ico" width="22" height="22"><use href="#ico-chat"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="section about" id="about">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">À propos</span>
+      <h2 class="section-title">Profil Professionnel</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Professionnel du digital avec une formation en <strong>IT et management</strong>, je développe des projets en ligne en combinant analyse, stratégie e-commerce et marketing digital.</p>
+        <p>Mon approche repose sur une logique orientée <strong>résultats, performance et optimisation continue</strong>, avec une attention particulière portée à l'expérience utilisateur et à la conversion.</p>
+        <p>Grâce à mon parcours technique et business, j'interviens sur l'ensemble de la chaîne de valeur d'un projet e-commerce : stratégie, contenu, optimisation SEO, gestion de boutique en ligne et analyse de performance.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-number">2<span class="stat-plus">+</span></span>
+            <span class="stat-label">Ans d'expérience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">Master</span>
+            <span class="stat-label">IT &amp; Management</span>
+          </div>
+          <div class="stat">
+            <!-- TODO: Ajouter le nombre de projets réalisés -->
+            <span class="stat-number">?</span>
+            <span class="stat-label">Projets réalisés</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-image">
+        <!-- TODO: Remplacer par votre photo — <img src="photo2.jpg" alt=""> -->
+        <div class="about-image-placeholder">
+          <svg class="ico" width="48" height="48"><use href="#ico-image"/></svg>
+          <span>Photo / Illustration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Services</span>
+      <h2 class="section-title">Compétences &amp; Services</h2>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon"><svg class="ico" width="22" height="22"><use href="#ico-trend"/></svg></div>
+        <h3>Stratégie E-commerce</h3>
+        <ul>
+          <li>Création et développement de projets e-commerce</li>
+          <li>Analyse des opportunités de marché</li>
+          <li>Optimisation du parcours client et de la conversion</li>
+          <li>Approche orientée résultats et performance</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon"><svg class="ico" width="22" height="22"><use href="#ico-search"/></svg></div>
+        <h3>SEO &amp; Content Marketing</h3>
+        <ul>
+          <li>Rédaction d'articles de blog optimisés SEO</li>
+          <li>Recherche et intégration de mots-clés stratégiques</li>
+          <li>Structuration d'articles pour le référencement Google</li>
+          <li>Génération de trafic organique qualifié</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon"><svg class="ico" width="22" height="22"><use href="#ico-store"/></svg></div>
+        <h3>Gestion de site e-commerce</h3>
+        <ul>
+          <li>Structuration de pages produits et catégories</li>
+          <li>Contenu éditorial pour soutenir les ventes</li>
+          <li>Intégration de liens vers des produits</li>
+          <li>Optimisation du contenu pour le SEO naturel</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon"><svg class="ico" width="22" height="22"><use href="#ico-bars"/></svg></div>
+        <h3>Analyse &amp; Optimisation</h3>
+        <ul>
+          <li>Analyse de la performance des contenus</li>
+          <li>Amélioration continue des stratégies SEO</li>
+          <li>Approche analytique issue de ma formation IT</li>
+          <li>Reporting et suivi des indicateurs clés</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK ===== -->
+<section class="section work" id="work">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Expérience</span>
+      <h2 class="section-title">Expérience Digitale</h2>
+    </div>
+    <div class="work-grid">
+
+      <div class="work-card featured">
+        <div class="work-card-tag">Expérience principale</div>
+        <h3>Création &amp; Optimisation de contenu e-commerce</h3>
+        <p>Participation à la création de contenus stratégiques pour des sites e-commerce, notamment via des articles de blog optimisés SEO destinés à générer du trafic qualifié et à soutenir les ventes de produits.</p>
+        <ul class="work-highlights">
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Structure optimisée pour le référencement</li>
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Intégration stratégique des mots-clés</li>
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Liens vers des produits e-commerce</li>
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Rédaction naturelle et engageante</li>
+        </ul>
+        <!-- TODO: Ajouter un lien vers un exemple de projet ou article -->
+        <a href="#" class="btn-outline-small">Voir un exemple →</a>
+      </div>
+
+      <div class="work-card">
+        <div class="work-card-tag">Formation</div>
+        <h3>Master IT &amp; Management</h3>
+        <p>Double compétence technique et business :</p>
+        <ul class="work-highlights">
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Compréhension des systèmes digitaux</li>
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Stratégie et analyse de performance</li>
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> Gestion de projets digitaux</li>
+          <li><svg class="ico" width="14" height="14"><use href="#ico-check"/></svg> 2 ans d'alternance professionnelle</li>
+        </ul>
+        <!-- TODO: Ajouter le nom de l'école / université -->
+        <p class="work-school"><svg class="ico" width="14" height="14"><use href="#ico-grad"/></svg> <em>[Nom de l'école — à renseigner]</em></p>
+      </div>
+
+      <!-- TODO: Ajouter d'autres projets / expériences ici -->
+      <div class="work-card add-card">
+        <div class="add-card-inner">
+          <svg class="ico" width="36" height="36"><use href="#ico-plus"/></svg>
+          <span>Ajouter un projet ou une expérience</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPROACH ===== -->
+<section class="section approach">
+  <div class="container">
+    <div class="approach-inner">
+      <div class="approach-text">
+        <span class="section-tag">Ma mentalité</span>
+        <h2 class="section-title">Approche professionnelle</h2>
+        <p>La réussite d'un projet digital repose autant sur la stratégie et l'analyse que sur la <strong>mentalité et l'engagement</strong> des personnes qui le portent.</p>
+      </div>
+      <div class="approach-pillars">
+        <div class="pillar">
+          <svg class="ico" width="28" height="28"><use href="#ico-target"/></svg>
+          <h4>Performance</h4>
+          <p>Résultats mesurables et indicateurs concrets</p>
+        </div>
+        <div class="pillar">
+          <svg class="ico" width="28" height="28"><use href="#ico-sync"/></svg>
+          <h4>Amélioration continue</h4>
+          <p>Test, analyse, optimisation en boucle</p>
+        </div>
+        <div class="pillar">
+          <svg class="ico" width="28" height="28"><use href="#ico-bulb"/></svg>
+          <h4>Proactivité</h4>
+          <p>Mentalité orientée solutions et initiatives</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Contact</span>
+      <h2 class="section-title">Travaillons ensemble</h2>
+      <p class="section-subtitle">Vous avez un projet e-commerce ou une problématique SEO ? Discutons-en.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <!-- TODO: Renseigner votre email -->
+        <div class="contact-item">
+          <svg class="ico" width="16" height="16"><use href="#ico-mail"/></svg>
+          <span>[votre@email.com]</span>
+        </div>
+        <!-- TODO: Renseigner votre localisation -->
+        <div class="contact-item">
+          <svg class="ico" width="16" height="16"><use href="#ico-pin"/></svg>
+          <span>[Ville, Pays]</span>
+        </div>
+        <!-- TODO: Ajouter votre profil LinkedIn -->
+        <div class="contact-item">
+          <svg class="ico" width="16" height="16"><use href="#ico-linkedin"/></svg>
+          <span>[Profil LinkedIn]</span>
+        </div>
+        <div class="contact-socials">
+          <a href="#" aria-label="Facebook"><svg class="ico" width="16" height="16"><use href="#ico-facebook"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg class="ico" width="16" height="16"><use href="#ico-twitter"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg class="ico" width="16" height="16"><use href="#ico-instagram"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg class="ico" width="16" height="16"><use href="#ico-linkedin"/></svg></a>
+        </div>
+      </div>
+      <form class="contact-form" id="contact-form">
+        <div class="form-row">
+          <input type="text" placeholder="Votre nom" required/>
+          <input type="email" placeholder="Votre email" required/>
+        </div>
+        <input type="text" placeholder="Sujet"/>
+        <textarea rows="5" placeholder="Votre message…" required></textarea>
+        <button type="submit" class="btn-primary">Envoyer le message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span class="logo-text footer-logo">DB</span>
+      <p class="footer-copy">
+        <!-- TODO: Remplacer par votre nom complet -->
+        &copy; 2026 <em>[Votre Nom]</em> — E-commerce &amp; Digital Strategy
+      </p>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV ─────────────────────────────────────────────── */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.querySelector('.nav-links');
+
+hamburger?.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const spans = hamburger.querySelectorAll('span');
+  const open  = navLinks.classList.contains('open');
+  spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)'   : '';
+  spans[1].style.opacity   = open ? '0' : '';
+  spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+});
+
+navLinks?.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-links a[href^="#"]');
+function setActiveNav(){
+  const y = window.scrollY + 100;
+  sections.forEach(s => {
+    if(y >= s.offsetTop && y < s.offsetTop + s.offsetHeight){
+      navItems.forEach(a => a.classList.remove('active'));
+      document.querySelector(`.nav-links a[href="#${s.id}"]`)?.classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll', setActiveNav, {passive:true});
+
+/* ── SCROLL REVEAL ───────────────────────────────────── */
+document.querySelectorAll('.service-card,.work-card,.pillar,.about-grid,.stat,.contact-grid')
+  .forEach(el => el.setAttribute('data-reveal',''));
+
+new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const delay = [...(e.target.parentElement?.children??[])].indexOf(e.target)*80;
+      setTimeout(() => e.target.classList.add('revealed'), delay);
+    }
+  });
+},{threshold:.12}).observe
+  ? document.querySelectorAll('[data-reveal]').forEach(el =>
+      new IntersectionObserver(([e]) => {
+        if(e.isIntersecting){ const d=[...(e.target.parentElement?.children??[])].indexOf(e.target)*80; setTimeout(()=>e.target.classList.add('revealed'),d); }
+      },{threshold:.12}).observe(el))
+  : null;
+
+/* ── CONTACT FORM ────────────────────────────────────── */
+document.getElementById('contact-form')?.addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const orig = btn.textContent;
+  btn.textContent = 'Message envoyé ✓';
+  btn.style.background = '#27ae60';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent=orig; btn.style.background=''; btn.disabled=false; e.target.reset(); }, 3000);
+});
+
+/* ── NAVBAR BORDER ON SCROLL ─────────────────────────── */
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  navbar.style.borderBottomColor = window.scrollY>50 ? 'rgba(78,205,196,.15)' : 'rgba(255,255,255,.05)';
+},{passive:true});
+</script>
+</body>
+</html>

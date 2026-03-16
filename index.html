@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corentin Ulmann — E-commerce & Digital Strategy</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <span class="logo-text">CU</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About me</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact" class="nav-contact-btn">Contact</a></li>
+    </ul>
+    <!-- User area -->
+    <div class="nav-user-area">
+      <!-- Déconnecté -->
+      <button class="nav-user-btn" id="btn-open-login" title="Se connecter">
+        <i class="fas fa-user-circle"></i>
+      </button>
+      <!-- Connecté -->
+      <div class="nav-user-menu hidden" id="nav-user-menu">
+        <button class="nav-avatar-btn" id="nav-avatar-toggle">
+          <div class="nav-avatar" id="nav-avatar-initial">?</div>
+          <span class="nav-avatar-name" id="nav-avatar-name">Utilisateur</span>
+          <i class="fas fa-chevron-down nav-chevron" id="nav-chevron"></i>
+        </button>
+        <div class="nav-user-dropdown hidden" id="nav-user-dropdown">
+          <button id="btn-open-settings"><i class="fas fa-cog"></i> Paramètres du compte</button>
+          <button id="btn-logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="home">
+    <!-- Social links vertical bar -->
+    <div class="social-bar">
+      <a href="https://www.linkedin.com/in/corentin-ulmann/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <!-- Hero image -->
+    <div class="hero-image-wrapper">
+      <img src="photo.jpg" alt="Corentin Ulmann" />
+    </div>
+
+    <!-- Hero text -->
+    <div class="hero-content">
+      <p class="hero-tag">E-commerce &amp; Digital Strategy</p>
+      <h1 class="hero-title">
+        Stratégie e-commerce &amp;<br />
+        Marketing digital
+      </h1>
+      <p class="hero-subtitle">
+        — Vous avez un projet en tête ? Discutons-en dès aujourd'hui.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#contact" class="btn-primary">Me contacter</a>
+        <a href="#work" class="btn-outline">Voir mes projets</a>
+      </div>
+    </div>
+
+    <!-- Direct message CTA (bottom-right) -->
+    <div class="direct-msg">
+      <span class="direct-msg-label">Envoyer un message direct</span>
+      <svg class="arrow-svg" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 35 Q 40 5 70 20" stroke="#4ECDC4" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <polygon points="65,15 75,22 62,26" fill="#4ECDC4"/>
+      </svg>
+      <a href="#contact" class="direct-msg-icon" aria-label="Message direct">
+        <i class="fas fa-comment-dots"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">À propos</span>
+        <h2 class="section-title">Profil Professionnel</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Professionnel du digital avec une formation en <strong>IT et management</strong>, je développe des projets en ligne en combinant analyse, stratégie e-commerce et marketing digital.
+          </p>
+          <p>
+            Mon approche repose sur une logique orientée <strong>résultats, performance et optimisation continue</strong>, avec une attention particulière portée à l'expérience utilisateur et à la conversion.
+          </p>
+          <p>
+            Grâce à mon parcours technique et business, j'interviens sur l'ensemble de la chaîne de valeur d'un projet e-commerce : stratégie, contenu, optimisation SEO, gestion de boutique en ligne et analyse de performance.
+          </p>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-number">2<span class="stat-plus">+</span></span>
+              <span class="stat-label">Ans d'expérience</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">Master</span>
+              <span class="stat-label">IT &amp; Management</span>
+            </div>
+            <div class="stat">
+              <!-- TODO: Ajouter le nombre de projets réalisés -->
+              <span class="stat-number">?</span>
+              <span class="stat-label">Projets réalisés</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <!-- TODO: Replace with a second photo or illustration -->
+          <div class="about-image-placeholder">
+            <i class="fas fa-image"></i>
+            <span>Photo / Illustration</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS / SERVICES SECTION ===== -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Services</span>
+        <h2 class="section-title">Compétences &amp; Services</h2>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Stratégie E-commerce</h3>
+          <ul>
+            <li>Création et développement de projets e-commerce</li>
+            <li>Analyse des opportunités de marché</li>
+            <li>Optimisation du parcours client et de la conversion</li>
+            <li>Approche orientée résultats et performance</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-search"></i></div>
+          <h3>SEO &amp; Content Marketing</h3>
+          <ul>
+            <li>Rédaction d'articles de blog optimisés SEO</li>
+            <li>Recherche et intégration de mots-clés stratégiques</li>
+            <li>Structuration d'articles pour le référencement Google</li>
+            <li>Génération de trafic organique qualifié</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-store"></i></div>
+          <h3>Gestion de site e-commerce</h3>
+          <ul>
+            <li>Structuration de pages produits et catégories</li>
+            <li>Contenu éditorial pour soutenir les ventes</li>
+            <li>Intégration de liens vers des produits</li>
+            <li>Optimisation du contenu pour le SEO naturel</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-microscope"></i></div>
+          <h3>Analyse &amp; Optimisation</h3>
+          <ul>
+            <li>Analyse de la performance des contenus</li>
+            <li>Amélioration continue des stratégies SEO</li>
+            <li>Approche analytique issue de ma formation IT</li>
+            <li>Reporting et suivi des indicateurs clés</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WORK / EXPERIENCE SECTION ===== -->
+  <section class="section work" id="work">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Expérience</span>
+        <h2 class="section-title">Expérience Digitale</h2>
+      </div>
+      <div class="work-grid">
+
+        <div class="work-card featured">
+          <div class="work-card-tag">Expérience principale</div>
+          <h3>Création &amp; Optimisation de contenu e-commerce</h3>
+          <p>
+            Participation à la création de contenus stratégiques pour des sites e-commerce, notamment via des articles de blog optimisés SEO destinés à générer du trafic qualifié et à soutenir les ventes de produits.
+          </p>
+          <ul class="work-highlights">
+            <li><i class="fas fa-check-circle"></i> Structure optimisée pour le référencement</li>
+            <li><i class="fas fa-check-circle"></i> Intégration stratégique des mots-clés</li>
+            <li><i class="fas fa-check-circle"></i> Liens vers des produits e-commerce</li>
+            <li><i class="fas fa-check-circle"></i> Rédaction naturelle et engageante</li>
+          </ul>
+          <!-- TODO: Ajouter un lien vers un exemple de projet ou article -->
+          <a href="#" class="btn-outline-small">Voir un exemple →</a>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-tag">Formation</div>
+          <h3>Master IT &amp; Management</h3>
+          <p>Double compétence technique et business :</p>
+          <ul class="work-highlights">
+            <li><i class="fas fa-check-circle"></i> Compréhension des systèmes digitaux</li>
+            <li><i class="fas fa-check-circle"></i> Stratégie et analyse de performance</li>
+            <li><i class="fas fa-check-circle"></i> Gestion de projets digitaux</li>
+            <li><i class="fas fa-check-circle"></i> 2 ans d'alternance en environnement professionnel</li>
+          </ul>
+          <p class="work-school"><i class="fas fa-graduation-cap"></i> IDMC, Nancy</p>
+        </div>
+
+        <!-- TODO: Ajouter d'autres projets / expériences ici -->
+        <div class="work-card add-card">
+          <div class="add-card-inner">
+            <i class="fas fa-plus-circle"></i>
+            <span>Ajouter un projet ou une expérience</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== APPROACH / PHILOSOPHY SECTION ===== -->
+  <section class="section approach">
+    <div class="container">
+      <div class="approach-inner">
+        <div class="approach-text">
+          <span class="section-tag">Ma mentalité</span>
+          <h2 class="section-title">Approche professionnelle</h2>
+          <p>La réussite d'un projet digital repose autant sur la stratégie et l'analyse que sur la <strong>mentalité et l'engagement</strong> des personnes qui le portent.</p>
+        </div>
+        <div class="approach-pillars">
+          <div class="pillar">
+            <i class="fas fa-bullseye"></i>
+            <h4>Performance</h4>
+            <p>Résultats mesurables et indicateurs concrets</p>
+          </div>
+          <div class="pillar">
+            <i class="fas fa-sync-alt"></i>
+            <h4>Amélioration continue</h4>
+            <p>Test, analyse, optimisation en boucle</p>
+          </div>
+          <div class="pillar">
+            <i class="fas fa-lightbulb"></i>
+            <h4>Proactivité</h4>
+            <p>Mentalité orientée solutions et initiatives</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT SECTION ===== -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Contact</span>
+        <h2 class="section-title">Travaillons ensemble</h2>
+        <p class="section-subtitle">Vous avez un projet e-commerce ou une problématique SEO ? Discutons-en.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:corentinulmann.pro@gmail.com">corentinulmann.pro@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Nancy, France</span>
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-linkedin-in"></i>
+            <a href="https://www.linkedin.com/in/corentin-ulmann/" target="_blank" rel="noopener">linkedin.com/in/corentin-ulmann</a>
+          </div>
+          <div class="contact-socials">
+            <a href="https://www.linkedin.com/in/corentin-ulmann/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <input type="text" placeholder="Votre nom" required />
+            <input type="email" placeholder="Votre email" required />
+          </div>
+          <input type="text" placeholder="Sujet" />
+          <textarea rows="5" placeholder="Votre message…" required></textarea>
+          <button type="submit" class="btn-primary">Envoyer le message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="logo-text footer-logo">CU</span>
+        <p class="footer-copy">
+          &copy; 2026 Corentin Ulmann — E-commerce &amp; Digital Strategy
+        </p>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MODAL : CONNEXION ===== -->
+  <div class="modal-overlay" id="modal-login">
+    <div class="modal-box">
+      <button class="modal-close" data-modal="modal-login">&times;</button>
+      <div class="modal-header">
+        <span class="logo-text modal-logo">CU</span>
+        <h2>Se connecter</h2>
+        <p>Accédez à votre espace personnel</p>
+      </div>
+      <form id="form-login" novalidate>
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="votre@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Mot de passe</label>
+          <div class="input-pw-wrap">
+            <input type="password" id="login-password" placeholder="••••••••" required />
+            <button type="button" class="btn-toggle-pw" data-target="login-password"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-msg" id="login-msg"></div>
+        <button type="submit" class="btn-primary btn-full">Se connecter</button>
+      </form>
+      <p class="modal-switch">Pas encore de compte ? <button class="link-btn" id="switch-to-register">Créer un compte</button></p>
+    </div>
+  </div>
+
+  <!-- ===== MODAL : INSCRIPTION ===== -->
+  <div class="modal-overlay" id="modal-register">
+    <div class="modal-box">
+      <button class="modal-close" data-modal="modal-register">&times;</button>
+      <div class="modal-header">
+        <span class="logo-text modal-logo">CU</span>
+        <h2>Créer un compte</h2>
+        <p>Rejoignez mon espace professionnel</p>
+      </div>
+      <form id="form-register" novalidate>
+        <div class="form-group">
+          <label for="reg-name">Nom complet</label>
+          <input type="text" id="reg-name" placeholder="Jean Dupont" required />
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" placeholder="votre@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="reg-password">Mot de passe <span class="label-hint">(6 caractères min.)</span></label>
+          <div class="input-pw-wrap">
+            <input type="password" id="reg-password" placeholder="••••••••" required />
+            <button type="button" class="btn-toggle-pw" data-target="reg-password"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-password2">Confirmer le mot de passe</label>
+          <div class="input-pw-wrap">
+            <input type="password" id="reg-password2" placeholder="••••••••" required />
+            <button type="button" class="btn-toggle-pw" data-target="reg-password2"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-msg" id="register-msg"></div>
+        <button type="submit" class="btn-primary btn-full">Créer mon compte</button>
+      </form>
+      <p class="modal-switch">Déjà un compte ? <button class="link-btn" id="switch-to-login">Se connecter</button></p>
+    </div>
+  </div>
+
+  <!-- ===== MODAL : PARAMÈTRES ===== -->
+  <div class="modal-overlay" id="modal-settings">
+    <div class="modal-box modal-box--wide">
+      <button class="modal-close" data-modal="modal-settings">&times;</button>
+      <div class="modal-header">
+        <h2>Paramètres du compte</h2>
+        <p id="settings-email-display" class="settings-email-display">—</p>
+      </div>
+      <div class="settings-sections">
+
+        <!-- Informations personnelles -->
+        <div class="settings-section">
+          <h3><i class="fas fa-user"></i> Informations personnelles</h3>
+          <form id="form-settings-info">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-name">Nom complet</label>
+                <input type="text" id="settings-name" required />
+              </div>
+              <div class="form-group">
+                <label for="settings-email">Email</label>
+                <input type="email" id="settings-email" required />
+              </div>
+            </div>
+            <div class="form-msg" id="settings-info-msg"></div>
+            <button type="submit" class="btn-primary">Enregistrer les modifications</button>
+          </form>
+        </div>
+
+        <!-- Changer le mot de passe -->
+        <div class="settings-section">
+          <h3><i class="fas fa-lock"></i> Changer le mot de passe</h3>
+          <form id="form-settings-pw">
+            <div class="form-group">
+              <label for="settings-pw-current">Mot de passe actuel</label>
+              <div class="input-pw-wrap">
+                <input type="password" id="settings-pw-current" placeholder="••••••••" required />
+                <button type="button" class="btn-toggle-pw" data-target="settings-pw-current"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-pw-new">Nouveau mot de passe</label>
+                <div class="input-pw-wrap">
+                  <input type="password" id="settings-pw-new" placeholder="••••••••" required />
+                  <button type="button" class="btn-toggle-pw" data-target="settings-pw-new"><i class="fas fa-eye"></i></button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="settings-pw-new2">Confirmer</label>
+                <div class="input-pw-wrap">
+                  <input type="password" id="settings-pw-new2" placeholder="••••••••" required />
+                  <button type="button" class="btn-toggle-pw" data-target="settings-pw-new2"><i class="fas fa-eye"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="form-msg" id="settings-pw-msg"></div>
+            <button type="submit" class="btn-primary">Changer le mot de passe</button>
+          </form>
+        </div>
+
+        <!-- Zone de danger -->
+        <div class="settings-section settings-danger">
+          <h3><i class="fas fa-exclamation-triangle"></i> Zone de danger</h3>
+          <p>Supprimer définitivement votre compte et toutes vos données. Cette action est irréversible.</p>
+          <button class="btn-danger" id="btn-delete-account">Supprimer mon compte</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
